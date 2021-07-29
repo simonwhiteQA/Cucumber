@@ -23,6 +23,9 @@ public class SearchPage {
 	@FindBy(css = "#main-content > div:nth-child(1) > div.ssrcss-1v7bxtk-StyledContainer.enjd40x0 > div > div > ul > li:nth-child(1) > div > div > div.ssrcss-som5se-PromoContent.e1f5wbog7 > div.ssrcss-rjdkox-Stack.e1y4nx260 > a > span > p > span")
 	private WebElement searchResult;
 	
+	@FindBy(xpath = "/html/body/div/div/header/div[2]/nav/div[1]/div/div[1]/div/a")
+	private WebElement homeButton;
+	
 	
 	// Method to send keys and click search button
 	public void search(String searchTerm) {
@@ -33,6 +36,11 @@ public class SearchPage {
 	// Method to return value of search result
 	public String checkResult() {
 		return searchResult.getText().toLowerCase();
+	}
+	
+	// Method to go back to BBC Home
+	public void backHome() {
+		homeButton.click();
 	}
 
 }

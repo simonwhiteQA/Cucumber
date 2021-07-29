@@ -7,8 +7,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.PageFactory;
 
+import com.qa.pages.HomePage;
 import com.qa.pages.SearchPage;
 
 public class SeleniumTest {
@@ -17,31 +19,59 @@ public class SeleniumTest {
 	
 	@Before
 	public void setup() {
-		this.driver = new ChromeDriver();
+		
+		ChromeOptions options = new ChromeOptions();
+		options.setHeadless(true); // Stops the windows from displaying
+		
+		this.driver = new ChromeDriver(options);
 		this.driver.manage().window().maximize();
 	}
 	
 	// Using POM (Page Object Model) when I search into the BBC Search search bar I want an article containing that string to appear
+//	@Test
+//	public void searchString() throws InterruptedException {
+//		
+//		String testString = "keyboard";
+//		
+//		// Create a new object of SearchPage called searchPage
+//		// Object will be created with pageFactory, where we pass in the class
+//		SearchPage page = PageFactory.initElements(driver, SearchPage.class);
+//		
+//		// using driver navigate to the pages object URL
+//		this.driver.get(page.URL);
+//		
+//		// Run the objects methods to use the search bar
+//		page.search(testString);
+//		
+//		Thread.sleep(6000);
+//		
+//		// Test the first article contains the testString 
+//		assertTrue(page.checkResult().contains(testString));
+//		
+//	}
+	
+	// Using POM when I click the BBC logo from the Search page I want to go to the BBC Home page (and validate it)
 	@Test
-	public void searchString() throws InterruptedException {
+	public void homeTakesYouHome() throws InterruptedException {
 		
-		String testString = "keyboard";
+		SearchPage searchPage = PageFactory.initElements(driver, SearchPage.class);
 		
-		// Create a new object of SearchPage called searchPage
-		// Object will be created with pageFactory, where we pass in the class
-		SearchPage page = PageFactory.initElements(driver, SearchPage.class);
+		// Gone to Search page URL
+		this.driver.get(searchPage.URL);
 		
-		// using driver navigate to the pages object URL
-		this.driver.get(page.URL);
+		Thread.sleep(2000);
 		
-		// Run the objects methods to use the search bar
-		page.search(testString);
+		// Running the go back home method
+		searchPage.backHome();
 		
-		Thread.sleep(6000);
+		Thread.sleep(2000);
 		
-		// Test the first article contains the testString 
-		assertTrue(page.checkResult().contains(testString));
+		// Create a new object called home page
 		
+		HomePage homePage = PageFactory.initElements(driver, HomePage.class);
+		
+		// Using method in homepage object, is the header the same
+		assertTrue(homePage.returnHeader().contains("welcome to the bbc"));
 	}
 	
 	@After
