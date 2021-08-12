@@ -15,7 +15,7 @@ import io.cucumber.junit.CucumberOptions.SnippetType;
 						   "junit:target/bing/cucumber-junit-report.xml"
 				 },
 				 monochrome = true,
-				 tags = "@demosite"
+				 tags = "@alert"
 )
 
 
